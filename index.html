@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Form</title>
+  <style>
+    /* Body */
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Container */
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+      width: 380px;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    /* Fade animation */
+    @keyframes fadeIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Heading */
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4a4a4a;
+    }
+
+    /* Form Groups */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    /* Inputs */
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.3s;
+      font-size: 14px;
+      background-color: #fdfdfd;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #7d5fff;
+      box-shadow: 0 0 5px rgba(125, 95, 255, 0.5);
+    }
+
+    /* Error Messages */
+    .error {
+      color: #ff4d6d;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* Password Strength */
+    #passwordStrength {
+      font-size: 13px;
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    /* Submit Button */
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #7d5fff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      animation: floatButton 2s ease-in-out infinite;
+    }
+
+    button:hover {
+      background: #5a3fe3;
+    }
+
+    /* Floating button animation */
+    @keyframes floatButton {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form id="myForm">
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" />
+        <div class="error" id="nameError"></div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" placeholder="Enter your email" />
+        <div id="emailStatus" style="font-size: 13px; margin-top: 4px;"></div>
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <!-- Mobile Number -->
+      <div class="form-group">
+        <label for="mobile">Mobile Number</label>
+        <div style="display: flex; gap: 10px;">
+          <select id="countryCode">
+            <option value="+91">🇮🇳 +91</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+61">🇦🇺 +61</option>
+            <option value="+81">🇯🇵 +81</option>
+          </select>
+          <input type="text" id="mobile" placeholder="10-digit number" maxlength="10" />
+        </div>
+        <div class="error" id="mobileError"></div>
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea id="address" rows="3" placeholder="Enter your address"></textarea>
+        <div class="error" id="addressError"></div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Create a password" />
+        <div id="passwordStrength"></div>
+        <div class="error" id="passwordError"></div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Re-enter password" />
+        <div class="error" id="confirmPasswordError"></div>
+      </div>
+
+      <!-- Submit -->
+    <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+  // Form submission
+  document.getElementById("myForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Input fields
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const countryCode = document.getElementById("countryCode").value;
+    const mobile = document.getElementById("mobile").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+    // Error fields
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const mobileError = document.getElementById("mobileError");
+    const addressError = document.getElementById("addressError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+    // Reset errors
+    nameError.textContent = "";
+    emailError.textContent = "";
+    mobileError.textContent = "";
+    addressError.textContent = "";
+    passwordError.textContent = "";
+    confirmPasswordError.textContent = "";
+
+    let isValid = true;
+
+    // Name validation
+    if (name === "") {
+      nameError.textContent = "Full name is required!";
+      isValid = false;
+    } else if (name.length < 3) {
+      nameError.textContent = "Name must be at least 3 characters!";
+      isValid = false;
+    }
+
+    // Email validation
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (email === "") {
+      emailError.textContent = "Email is required!";
+      isValid = false;
+    } else if (!emailPattern.test(email)) {
+      emailError.textContent = "Enter a valid email!";
+      isValid = false;
+    }
+
+    // Mobile number validation
+    if (mobile === "") {
+      mobileError.textContent = "Mobile number is required!";
+      isValid = false;
+    } else if (!/^\d{10}$/.test(mobile)) {
+      mobileError.textContent = "Enter a valid 10-digit number!";
+      isValid = false;
+    }
+
+    // Address validation
+    if (address === "") {
+      addressError.textContent = "Address is required!";
+      isValid = false;
+    }
+
+    // Password validation
+    const passwordStrength = document.getElementById("passwordStrength");
+    const strongPasswordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+    if (password === "") {
+      passwordError.textContent = "Password is required!";
+      passwordStrength.textContent = "";
+      isValid = false;
+    } else if (!strongPasswordPattern.test(password)) {
+      passwordError.textContent =
+        "Must include 6+ chars, uppercase, lowercase, number & special char!";
+      isValid = false;
+    }
+
+    // Confirm password validation
+    if (confirmPassword === "") {
+      confirmPasswordError.textContent = "Please confirm your password!";
+      isValid = false;
+    } else if (password !== confirmPassword) {
+      confirmPasswordError.textContent = "Passwords do not match!";
+      isValid = false;
+    }
+
+    // If form is valid, redirect to thankyou.html
+    if (isValid) {
+      window.location.href = "thankyou.html";
+    }
+  });
+
+  // Real-time password strength checker
+  document.getElementById("password").addEventListener("input", function () {
+    const password = this.value;
+    const passwordStrength = document.getElementById("passwordStrength");
+
+    const weak = /^(?=.*[a-z])(?=.*[A-Z]).{1,5}$/;
+    const medium = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&]).{6,7}$/;
+    const strong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,15}$/;
+
+    if (strong.test(password)) {
+      passwordStrength.textContent = "Strong Password ✅";
+      passwordStrength.style.color = "green";
+    } else if (medium.test(password)) {
+      passwordStrength.textContent = "Medium Password ⚠️";
+      passwordStrength.style.color = "orange";
+    } else if (weak.test(password)) {
+      passwordStrength.textContent = "Weak Password ❌";
+      passwordStrength.style.color = "red";
+    } else {
+      passwordStrength.textContent = "";
+    }
+  });
+
+  // Live email validation
+  document.getElementById("email").addEventListener("input", function () {
+    const email = this.value;
+    const emailStatus = document.getElementById("emailStatus");
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (emailPattern.test(email)) {
+      emailStatus.textContent = "✅ Valid email";
+      emailStatus.style.color = "green";
+    } else if (email.length > 0) {
+      emailStatus.textContent = "❌ Invalid email format";
+      emailStatus.style.color = "red";
+    } else {
+      emailStatus.textContent = "";
+    }
+  });
+</script>
+
+</body>
+</html>
